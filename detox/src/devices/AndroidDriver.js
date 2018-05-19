@@ -10,6 +10,8 @@ const APKPath = require('./android/APKPath');
 const DeviceDriverBase = require('./DeviceDriverBase');
 const DetoxApi = require('../android/espressoapi/Detox');
 const EspressoDetoxApi = require('../android/espressoapi/EspressoDetox');
+const UIAutomatorAPI = require('../android/espressoapi/UIAutomator');
+const UIDevice = require('../android/espressoapi/UIDevice');
 
 const EspressoDetox = 'com.wix.detox.espresso.EspressoDetox';
 
@@ -105,8 +107,8 @@ class AndroidDriver extends DeviceDriverBase {
   }
 
   async sendToHome(deviceId, params) {
-    const uiDevice = invoke.call(invoke.Android.Class("com.wix.detox.uiautomator.UiAutomator"), 'uiDevice');
-    const call = invoke.call(uiDevice, 'pressHome');
+    const uiDevice = invoke.callDirectly(UIAutomatorAPI.uiDevice());
+    const call = invoke.callDirectly(UIDevice.pressHome(uiDevice));
     await this.invocationManager.execute(call);
   }
 
