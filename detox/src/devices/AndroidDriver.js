@@ -71,7 +71,7 @@ class AndroidDriver extends DeviceDriverBase {
     });
 
     if (this.instrumentationProcess) {
-      const call = invoke.call(invoke.Android.Class("com.wix.detox.Detox"), 'launchMainActivity');
+      const call = invoke.callDirectly(DetoxApi.launchMainActivity());
       await this.invocationManager.execute(call);
       return this.instrumentationProcess.pid;
     }
