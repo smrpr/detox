@@ -104,7 +104,7 @@ class ArtifactsManager {
     }
 
     return new RecorderLifecycle({
-      shouldRecordStartup: true,
+      shouldRecordStartup: false,
       keepOnlyFailedTestsRecordings: recordVideos === 'failing',
       pathBuilder: this._pathBuilder,
       recorder: videoRecorder,
