@@ -1,5 +1,5 @@
 const fs = require('fs-extra');
-const RecordingArtifact = require('../../core/artifact/RecordingArtifact');
+const RecordingArtifact = require('../../base/RecordingArtifact');
 const ensureExtension = require('../../../utils/ensureExtension');
 const interruptProcess = require('../../../utils/interruptProcess');
 const sleep = require('../../../utils/sleep');
@@ -18,6 +18,10 @@ class ADBLogcatRecording extends RecordingArtifact {
     this.pathToLogOnDevice = pathToLogOnDevice;
     this.processId = processId;
     this.processPromise = null;
+  }
+
+  static buildPathToLogOnDevice() {
+    return `/sdcard/${this.counter++}.log`;
   }
 
   async doStart() {
@@ -70,5 +74,7 @@ class ADBLogcatRecording extends RecordingArtifact {
     } while (isFileOpen);
   }
 }
+
+ADBLogcatRecording.counter = 0;
 
 module.exports = ADBLogcatRecording;

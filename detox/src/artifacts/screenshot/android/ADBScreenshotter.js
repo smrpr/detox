@@ -1,4 +1,4 @@
-const Snapshotter = require('../../core/factory/Snapshotter');
+const Snapshotter = require('../../base/factory/Snapshotter');
 const ADBScreenshot = require('./ADBScreenshot');
 
 class ADBScreenshotter extends Snapshotter {

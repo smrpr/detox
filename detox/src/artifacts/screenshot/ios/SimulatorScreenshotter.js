@@ -1,5 +1,5 @@
 const tempfile = require('tempfile');
-const Snapshotter = require('../../core/factory/Snapshotter');
+const Snapshotter = require('../../base/factory/Snapshotter');
 const SimulatorScreenshot = require('./SimulatorScreenshot');
 
 class SimulatorScreenshotter extends Snapshotter {

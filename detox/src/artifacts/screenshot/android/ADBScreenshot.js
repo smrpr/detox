@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const ensureExtension = require('../../../utils/ensureExtension');
-const SnapshotArtifact = require('../../core/artifact/SnapshotArtifact');
+const SnapshotArtifact = require('../../base/SnapshotArtifact');
 
 class ADBScreenshot extends SnapshotArtifact {
   constructor(config) {

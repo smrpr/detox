@@ -1,5 +1,5 @@
 const path = require('path');
-const constructSafeFilename = require('../../../../utils/constructSafeFilename');
+const constructSafeFilename = require('../../utils/constructSafeFilename');
 
 class ArtifactPathBuilder {
   constructor({

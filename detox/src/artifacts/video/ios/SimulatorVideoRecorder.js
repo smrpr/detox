@@ -1,4 +1,4 @@
-const Recorder = require('../../core/factory/Recorder');
+const Recorder = require('../../base/factory/Recorder');
 const tempfile = require('tempfile');
 const SimulatorVideoRecording = require('./SimulatorVideoRecording');
 

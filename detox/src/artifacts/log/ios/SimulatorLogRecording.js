@@ -1,26 +1,34 @@
 const fs = require('fs-extra');
+const tempfile = require('tempfile');
 const log = require('npmlog');
 const { Tail } = require('tail');
 const ensureMove = require('../../../utils/ensureMove');
-const RecordingArtifact = require('../../core/artifact/RecordingArtifact');
+const RecordingArtifact = require('../../base/RecordingArtifact');
 
 class SimulatorLogRecording extends RecordingArtifact {
   constructor({
-    stdoutPath,
-    stderrPath,
-    temporaryLogPath,
-    fromBeginning,
+    appleSimUtils,
+    udid,
   }) {
     super();
 
-    this._logPath = temporaryLogPath;
-    this._stdoutPath = stdoutPath;
-    this._stderrPath = stderrPath;
-    this._fromBeginning = fromBeginning;
+    this._logPath = tempfile('.log');
+
+    const { stdout, stderr } = appleSimUtils.getLogsPaths(udid);
+    this._stdoutPath = stdout;
+    this._stderrPath = stderr;
 
     this._logStream = null;
     this._stdoutTail = null;
     this._stderrTail = null;
+  }
+
+  static isTailingLogForFirstTime(filename) {
+    return SimulatorLogRecording.tailedLogs.has(filename);
+  }
+
+  static markLogAsBeingTailed(filename) {
+    SimulatorLogRecording.tailedLogs.add(filename);
   }
 
   async doStart() {
@@ -45,8 +53,10 @@ class SimulatorLogRecording extends RecordingArtifact {
   }
 
   _createTail(file, prefix) {
+    const fromBeginning = SimulatorLogRecording.isTailingLogForFirstTime(file);
+
     const tail = new Tail(file, {
-      fromBeginning: this._fromBeginning,
+      fromBeginning,
       logger: {
         info: (...args) => log.verbose(`simulator-log-${prefix}`, ...args),
         error: (...args) => log.error(`simulator-log-${prefix}`, ...args),
@@ -55,8 +65,9 @@ class SimulatorLogRecording extends RecordingArtifact {
       this._appendLine(prefix, line);
     });
 
-    if (this._fromBeginning) {
+    if (fromBeginning) {
       this._triggerTailReadUsingHack(tail);
+      SimulatorLogRecording.markLogAsBeingTailed(file);
     }
 
     return tail;
@@ -76,6 +87,8 @@ class SimulatorLogRecording extends RecordingArtifact {
     this._logStream.write('\n');
   }
 }
+
+SimulatorLogRecording.tailedLogs = new Set();
 
 module.exports = SimulatorLogRecording;
 

@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const ensureMove = require('../../../utils/ensureMove');
-const SnapshotArtifact = require('../../core/artifact/SnapshotArtifact');
+const SnapshotArtifact = require('../../base/SnapshotArtifact');
 
 class SimulatorScreenshot extends SnapshotArtifact {
   constructor(config) {

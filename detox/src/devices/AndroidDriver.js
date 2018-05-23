@@ -10,8 +10,8 @@ const APKPath = require('./android/APKPath');
 const DeviceDriverBase = require('./DeviceDriverBase');
 const sleep = require('../utils/sleep');
 
-const ADBLogcatRecorder = require('../artifacts/log/android/ADBLogcatRecorder');
-const ADBScreenshotter = require('../artifacts/screenshot/android/ADBScreenshotter');
+const ADBLogcatRecording = require('../artifacts/log/android/ADBLogcatRecording');
+const ADBScreenshot = require('../artifacts/screenshot/android/ADBScreenshot');
 const ADBVideoRecorder = require('../artifacts/video/android/ADBVideoRecorder');
 
 const EspressoDetox = 'com.wix.detox.espresso.EspressoDetox';
@@ -31,8 +31,7 @@ class AndroidDriver extends DeviceDriverBase {
     const adb = this.adb;
 
     return {
-      log: (config) => new ADBLogcatRecorder({
-        ...config,
+      log: (config) => new ADBLogcatRecording({
         adb,
         deviceId,
         processId,

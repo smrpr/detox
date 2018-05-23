@@ -1,4 +1,4 @@
-const Recorder = require('../../core/factory/Recorder');
+const Recorder = require('../../base/factory/Recorder');
 const AndroidVideoRecording = require('./ADBVideoRecording');
 
 class ADBVideoRecorder extends Recorder {

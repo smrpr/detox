@@ -1,5 +1,5 @@
 const fs = require('fs-extra');
-const RecordingArtifact = require('../../core/artifact/RecordingArtifact');
+const RecordingArtifact = require('../../base/RecordingArtifact');
 const ensureExtension = require('../../../utils/ensureExtension');
 const interruptProcess = require('../../../utils/interruptProcess');
 const sleep = require('../../../utils/sleep');
